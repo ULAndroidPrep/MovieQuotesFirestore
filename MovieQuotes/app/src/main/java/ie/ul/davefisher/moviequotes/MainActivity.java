@@ -32,24 +32,24 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
-    // Temporary learning area
-    final FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-    // This is a single GET, we'll use Realtime updates!
-    db.collection("moviequotes")
-        .get()
-        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-          @Override
-          public void onComplete(@NonNull Task<QuerySnapshot> task) {
-            if (task.isSuccessful()) {
-              for (DocumentSnapshot document : task.getResult()) {
-                Log.d(TAG, document.getId() + " => " + document.getData());
-              }
-            } else {
-              Log.w(TAG, "Error getting documents.", task.getException());
-            }
-          }
-        });
+//    // Temporary learning area
+//    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+//
+//    // This is a single GET, we'll use Realtime updates!
+//    db.collection("moviequotes")
+//        .get()
+//        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//          @Override
+//          public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//            if (task.isSuccessful()) {
+//              for (DocumentSnapshot document : task.getResult()) {
+//                Log.d(TAG, document.getId() + " => " + document.getData());
+//              }
+//            } else {
+//              Log.w(TAG, "Error getting documents.", task.getException());
+//            }
+//          }
+//        });
 
 
     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -59,11 +59,11 @@ public class MainActivity extends AppCompatActivity {
         Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
             .setAction("Action", null).show();
 
-        Map<String, Object> mq = new HashMap<>();
-        mq.put("movie", "My movie " + mTempCounter);
-        mq.put("quote", "I can add documents");
-        db.collection("moviequotes").add(mq);
-        mTempCounter += 1;
+//        Map<String, Object> mq = new HashMap<>();
+//        mq.put("movie", "My movie " + mTempCounter);
+//        mq.put("quote", "I can add documents");
+//        db.collection("moviequotes").add(mq);
+//        mTempCounter += 1;
       }
     });
   }
