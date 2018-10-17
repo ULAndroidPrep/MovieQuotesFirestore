@@ -26,15 +26,13 @@ import java.util.List;
 
 public class MovieQuoteAdapter extends RecyclerView.Adapter<MovieQuoteAdapter.MovieQuoteViewHolder> {
 
-
-  private CollectionReference mMovieQuotesRef;
   private List<DocumentSnapshot> mMovieQuoteSnapshots = new ArrayList<>();
 
   public MovieQuoteAdapter() {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    mMovieQuotesRef = db.collection("moviequotes");
+    CollectionReference movieQuotesRef = db.collection("moviequotes");
 
-    mMovieQuotesRef.orderBy("created", Query.Direction.DESCENDING).limit(50)
+    movieQuotesRef.orderBy("created", Query.Direction.DESCENDING).limit(50)
         .addSnapshotListener(new EventListener<QuerySnapshot>() {
       @Override
       public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
