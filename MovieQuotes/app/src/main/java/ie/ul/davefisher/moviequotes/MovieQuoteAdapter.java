@@ -1,5 +1,7 @@
 package ie.ul.davefisher.moviequotes;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -74,6 +76,15 @@ public class MovieQuoteAdapter extends RecyclerView.Adapter<MovieQuoteAdapter.Mo
       super(itemView);
       mQuoteTextView = itemView.findViewById(R.id.quote);
       mMovieTextView = itemView.findViewById(R.id.movie);
+
+      itemView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Context context = v.getContext();
+          Intent intent = new Intent(context, MovieQuoteDetailActivity.class);
+          context.startActivity(intent);
+        }
+      });
     }
   }
 }
