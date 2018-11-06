@@ -30,7 +30,6 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-  public static final String TAG = "MQ";  // Should be in a Constants file.
 //  private int mTempCounter = 0;
 
   @Override
@@ -96,10 +95,10 @@ public class MainActivity extends AppCompatActivity {
       @Override
       public void onClick(DialogInterface dialog, int which) {
         Map<String, Object> mq = new HashMap<>();
-        mq.put("quote", quoteEditText.getText().toString());
-        mq.put("movie", movieEditText.getText().toString());
-        mq.put("created", new Date());
-        FirebaseFirestore.getInstance().collection("moviequotes").add(mq);
+        mq.put(Constants.KEY_QUOTE, quoteEditText.getText().toString());
+        mq.put(Constants.KEY_MOVIE, movieEditText.getText().toString());
+        mq.put(Constants.KEY_CREATED, new Date());
+        FirebaseFirestore.getInstance().collection(Constants.COLLECTION_PATH).add(mq);
       }
     });
     builder.setNegativeButton(android.R.string.cancel, null);

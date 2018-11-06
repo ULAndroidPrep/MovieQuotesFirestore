@@ -30,14 +30,14 @@ public class MovieQuoteAdapter extends RecyclerView.Adapter<MovieQuoteAdapter.Mo
 
   public MovieQuoteAdapter() {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    CollectionReference movieQuotesRef = db.collection("moviequotes");
+    CollectionReference movieQuotesRef = db.collection(Constants.COLLECTION_PATH);
 
-    movieQuotesRef.orderBy("created", Query.Direction.DESCENDING).limit(50)
+    movieQuotesRef.orderBy(Constants.KEY_CREATED, Query.Direction.DESCENDING).limit(50)
         .addSnapshotListener(new EventListener<QuerySnapshot>() {
       @Override
       public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
         if (e != null) {
-          Log.w(MainActivity.TAG, "Listen failed.", e);
+          Log.w(Constants.TAG, "Listen failed.", e);
           return;
         }
         mMovieQuoteSnapshots = documentSnapshots.getDocuments();
@@ -57,8 +57,8 @@ public class MovieQuoteAdapter extends RecyclerView.Adapter<MovieQuoteAdapter.Mo
   @Override
   public void onBindViewHolder(@NonNull MovieQuoteViewHolder holder, int position) {
     DocumentSnapshot mq = mMovieQuoteSnapshots.get(position);
-    holder.mQuoteTextView.setText((String)mq.get("quote"));
-    holder.mMovieTextView.setText((String)mq.get("movie"));
+    holder.mQuoteTextView.setText((String)mq.get(Constants.KEY_QUOTE));
+    holder.mMovieTextView.setText((String)mq.get(Constants.KEY_MOVIE));
   }
 
   @Override
@@ -82,7 +82,7 @@ public class MovieQuoteAdapter extends RecyclerView.Adapter<MovieQuoteAdapter.Mo
 
           Context context = v.getContext();
           Intent intent = new Intent(context, MovieQuoteDetailActivity.class);
-          intent.putExtra("document_id", mq.getId());
+          intent.putExtra(Constants.EXTRA_DOC_ID, mq.getId());
           context.startActivity(intent);
         }
       });

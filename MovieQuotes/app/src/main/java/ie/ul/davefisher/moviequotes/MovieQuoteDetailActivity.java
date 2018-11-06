@@ -53,7 +53,7 @@ public class MovieQuoteDetailActivity extends AppCompatActivity {
       @Override
       public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
         if (e != null) {
-          Log.w(MainActivity.TAG, "Listen failed.", e);
+          Log.w(Constants.TAG, "Listen failed.", e);
           return;
         }
         if (documentSnapshot.exists()) {
