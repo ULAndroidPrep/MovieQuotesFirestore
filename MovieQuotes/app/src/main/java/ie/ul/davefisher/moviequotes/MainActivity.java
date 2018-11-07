@@ -20,6 +20,8 @@ import android.widget.EditText;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -67,6 +69,21 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
 
+    // Temporary Auth learning area.
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    //auth.signOut();
+
+    FirebaseUser currentUser = auth.getCurrentUser();
+    if (currentUser == null) {
+      Log.d(Constants.TAG, "There is no user.  Need to sign in!");
+      auth.signInAnonymously();
+    } else {
+      Log.d(Constants.TAG, "There is a user.  All set!");
+    }
+
+
+
+
     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
     fab.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -97,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         Map<String, Object> mq = new HashMap<>();
         mq.put(Constants.KEY_QUOTE, quoteEditText.getText().toString());
         mq.put(Constants.KEY_MOVIE, movieEditText.getText().toString());
+        mq.put(Constants.KEY_USER_ID, FirebaseAuth.getInstance().getCurrentUser().getUid());
         mq.put(Constants.KEY_CREATED, new Date());
         FirebaseFirestore.getInstance().collection(Constants.COLLECTION_PATH).add(mq);
       }
