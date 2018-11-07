@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
-    RecyclerView recyclerView = findViewById(R.id.recycler_view);
+    final RecyclerView recyclerView = findViewById(R.id.recycler_view);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     recyclerView.setHasFixedSize(true);
 
@@ -69,8 +69,12 @@ public class MainActivity extends AppCompatActivity {
 //          }
 //        });
 
+
+
     // Temporary Auth learning area
     FirebaseAuth auth = FirebaseAuth.getInstance();
+//    auth.signOut();  // For testing only
+
     FirebaseUser currentUser = auth.getCurrentUser();
     if (currentUser == null) {
       Log.d(Constants.TAG, "No user.  Need to sign in anonymously.");
@@ -79,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         public void onComplete(@NonNull Task<AuthResult> task) {
           if(task.isSuccessful()) {
             Log.d(Constants.TAG, "We have a user!");
+            recyclerView.setAdapter(new MovieQuoteAdapter()); // Remake the adapter
           }
         }
       });
