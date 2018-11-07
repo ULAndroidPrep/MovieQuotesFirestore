@@ -1,6 +1,7 @@
 package ie.ul.davefisher.moviequotes;
 
 public class Constants {
+  // Constants
   public static final String TAG = "MQ";
   public static final String COLLECTION_PATH = "moviequotes";
   public static final String KEY_QUOTE = "quote";

@@ -24,6 +24,11 @@
             android:label="@string/title_activity_movie_quote_detail"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
