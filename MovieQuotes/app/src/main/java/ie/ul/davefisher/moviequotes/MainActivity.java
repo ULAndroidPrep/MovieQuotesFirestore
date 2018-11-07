@@ -20,6 +20,9 @@ import android.widget.EditText;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -66,6 +69,24 @@ public class MainActivity extends AppCompatActivity {
 //          }
 //        });
 
+    // Temporary Auth learning area
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser = auth.getCurrentUser();
+    if (currentUser == null) {
+      Log.d(Constants.TAG, "No user.  Need to sign in anonymously.");
+      auth.signInAnonymously().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        @Override
+        public void onComplete(@NonNull Task<AuthResult> task) {
+          if(task.isSuccessful()) {
+            Log.d(Constants.TAG, "We have a user!");
+          }
+        }
+      });
+    } else {
+      Log.d(Constants.TAG, "This is the second (or later) launch.  Use the current user");
+    }
+
+
 
     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
     fab.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         Map<String, Object> mq = new HashMap<>();
         mq.put(Constants.KEY_QUOTE, quoteEditText.getText().toString());
         mq.put(Constants.KEY_MOVIE, movieEditText.getText().toString());
+        mq.put(Constants.KEY_USER_ID, FirebaseAuth.getInstance().getCurrentUser().getUid());
         mq.put(Constants.KEY_CREATED, new Date());
         FirebaseFirestore.getInstance().collection(Constants.COLLECTION_PATH).add(mq);
       }
