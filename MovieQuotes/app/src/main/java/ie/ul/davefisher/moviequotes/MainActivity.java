@@ -71,25 +71,25 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    // Temporary Auth learning area
-    FirebaseAuth auth = FirebaseAuth.getInstance();
-//    auth.signOut();  // For testing only
-
-    FirebaseUser currentUser = auth.getCurrentUser();
-    if (currentUser == null) {
-      Log.d(Constants.TAG, "No user.  Need to sign in anonymously.");
-      auth.signInAnonymously().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-        @Override
-        public void onComplete(@NonNull Task<AuthResult> task) {
-          if(task.isSuccessful()) {
-            Log.d(Constants.TAG, "We have a user!");
-            recyclerView.setAdapter(new MovieQuoteAdapter()); // Remake the adapter
-          }
-        }
-      });
-    } else {
-      Log.d(Constants.TAG, "This is the second (or later) launch.  Use the current user");
-    }
+//    // Temporary Auth learning area
+//    FirebaseAuth auth = FirebaseAuth.getInstance();
+////    auth.signOut();  // For testing only
+//
+//    FirebaseUser currentUser = auth.getCurrentUser();
+//    if (currentUser == null) {
+//      Log.d(Constants.TAG, "No user.  Need to sign in anonymously.");
+//      auth.signInAnonymously().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//        @Override
+//        public void onComplete(@NonNull Task<AuthResult> task) {
+//          if(task.isSuccessful()) {
+//            Log.d(Constants.TAG, "We have a user!");
+//            recyclerView.setAdapter(new MovieQuoteAdapter()); // Remake the adapter
+//          }
+//        }
+//      });
+//    } else {
+//      Log.d(Constants.TAG, "This is the second (or later) launch.  Use the current user");
+//    }
 
 
 
@@ -131,6 +131,23 @@ public class MainActivity extends AppCompatActivity {
     builder.setNegativeButton(android.R.string.cancel, null);
 
     builder.create().show();
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_signout, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch ( item.getItemId()) {
+      case R.id.action_signout:
+        FirebaseAuth.getInstance().signOut();
+        finish();
+        return true;
+    }
+    return super.onOptionsItemSelected(item);
   }
 
 }
