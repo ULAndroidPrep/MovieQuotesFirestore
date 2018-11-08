@@ -124,4 +124,21 @@ public class MainActivity extends AppCompatActivity {
     builder.create().show();
   }
 
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_signout, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.action_signout:
+        FirebaseAuth.getInstance().signOut();
+        finish();
+        return true;
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
 }
