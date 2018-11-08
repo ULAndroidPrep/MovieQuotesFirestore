@@ -34,13 +34,31 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   public void handleSignIn(View view) {
-    Toast.makeText(this, "Sign in", Toast.LENGTH_SHORT).show();
+    String email = mEmailEditText.getText().toString();
+    String password = mPasswordEditText.getText().toString();
+    if (email.length() < 5 || !email.contains("@")) {
+      mEmailEditText.setError(getString(R.string.invalid_email));
+    } else if (password.length() < 6) {
+      mPasswordEditText.setError(getString(R.string.invalid_password));
+    } else {
+      mAuth.signInWithEmailAndPassword(email, password)
+          .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+              if (task.isSuccessful()) {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+              } else {
+                Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+              }
+            }
+          });
+    }
   }
 
   public void handleSignUp(View view) {
     String email = mEmailEditText.getText().toString();
     String password = mPasswordEditText.getText().toString();
-
     if (email.length() < 5 || !email.contains("@")) {
       mEmailEditText.setError(getString(R.string.invalid_email));
     } else if (password.length() < 6) {
